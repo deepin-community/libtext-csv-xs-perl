@@ -1,0 +1,2 @@
+# wants to read the source file for diagnostic messages
+t/80_diag.t

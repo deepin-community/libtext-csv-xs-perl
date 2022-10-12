@@ -1,0 +1,37 @@
+Source: libtext-csv-xs-perl
+Maintainer: Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian.org>
+Uploaders: Niko Tyni <ntyni@debian.org>,
+           Damyan Ivanov <dmn@debian.org>,
+           gregor herrmann <gregoa@debian.org>,
+           Vincent Danjean <vdanjean@debian.org>,
+           Ansgar Burchardt <ansgar@debian.org>,
+           Xavier Guimard <yadd@debian.org>
+Section: perl
+Testsuite: autopkgtest-pkg-perl
+Priority: optional
+Build-Depends: debhelper-compat (= 13),
+               libencode-perl (>= 3.06) <!nocheck>,
+               libtest-simple-perl <!nocheck>,
+               perl-xs-dev,
+               perl:native
+Standards-Version: 4.6.0
+Vcs-Browser: https://salsa.debian.org/perl-team/modules/packages/libtext-csv-xs-perl
+Vcs-Git: https://salsa.debian.org/perl-team/modules/packages/libtext-csv-xs-perl.git
+Homepage: https://metacpan.org/release/Text-CSV_XS
+Rules-Requires-Root: no
+
+Package: libtext-csv-xs-perl
+Architecture: any
+Multi-Arch: same
+Depends: ${misc:Depends},
+         ${perl:Depends},
+         ${shlibs:Depends},
+         libencode-perl (>= 3.06)
+Enhances: libtext-csv-perl
+Description: Perl C/XS module to process Comma-Separated Value files
+ Text::CSV_XS provides facilities for the composition and decomposition of
+ comma-separated values. This module can combine fields into a CSV string and,
+ correspondingly, parse a CSV string back into fields.
+ .
+ Text::CSV (see libtext-csv-perl) is a wrapper module which will automatically
+ select the most appropriate implementation for your configuration.
