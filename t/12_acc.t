@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 243;
+use Test::More tests => 245;
 
 BEGIN {
     use_ok "Text::CSV_XS";
@@ -33,6 +33,7 @@ is ($csv->diag_verbose,			0,		"diag_verbose");
 is ($csv->verbatim,			0,		"verbatim");
 is ($csv->formula,			"none",		"formula");
 is ($csv->strict,			0,		"strict");
+is ($csv->strict_eol,			0,		"strict_eol");
 is ($csv->skip_empty_rows,		0,		"skip_empty_rows");
 is ($csv->quote_space,			1,		"quote_space");
 is ($csv->quote_empty,			0,		"quote_empty");
@@ -95,6 +96,7 @@ is ($csv->diag_verbose (""),		0,		"diag_verbose (\"\")");
 is ($csv->verbatim (1),			1,		"verbatim (1)");
 is ($csv->formula ("diag"),		"diag",		"formula (\"diag\")");
 is ($csv->strict (1),			1,		"strict (1)");
+is ($csv->strict_eol (1),		1,		"strict_eol (1)");
 is ($csv->skip_empty_rows (1),		1,		"skip_empty_rows (1)");
 is ($csv->quote_space (1),		1,		"quote_space (1)");
 is ($csv->quote_empty (1),		1,		"quote_empty (1)");
@@ -189,19 +191,26 @@ foreach my $esc (undef, "", " ", "\t", "!!!!!!") {
     foreach my $quo (undef, "", " ", "\t", "!!!!!!") {
 	defined $esc && $esc =~ m/[ \t]/ or 
 	defined $quo && $quo =~ m/[ \t]/ or next;
+	my $wc = join " " => map {
+		!defined $_ ? "<undef>" :
+		$_ eq ""    ? "<empty>" :
+		$_ eq " "   ? "<sp>"    :
+		$_ eq "\t"  ? "<tab>"   : $_ }
+	    "esc:", $esc, "quo:", $quo;
 	eval { $csv = Text::CSV_XS->new ({
 	    escape           => $esc,
 	    quote            => $quo,
 	    allow_whitespace => 1,
 	    }) };
-	like ((Text::CSV_XS::error_diag)[1], qr{^INI - allow_whitespace}, "Wrong combo - error message");
-	is   ((Text::CSV_XS::error_diag)[0], 1002, "Wrong combo - numeric error");
+	like ((Text::CSV_XS::error_diag)[1], qr{^INI - allow_whitespace}, "Wrong combo - error message: $wc");
+	is   ((Text::CSV_XS::error_diag)[0], 1002, "Wrong combo - numeric error: $wc");
 	}
     }
 
 # Test 1003 in constructor
 foreach my $x ("\r", "\n", "\r\n", "x\n", "\rx") {
     foreach my $attr (qw( sep_char quote_char escape_char )) {
+	#ok (1, "attr: $attr => ", $x =~ s/\n/\\n/gr =~ s/\r/\\r/gr);
 	eval { $csv = Text::CSV_XS->new ({ $attr => $x }) };
 	is ((Text::CSV_XS::error_diag)[0], 1003, "eol in $attr");
 	}
@@ -259,7 +268,7 @@ my $attr = [ sort qw(
     always_quote quote_space quote_empty quote_binary
     escape_null
     keep_meta_info
-    verbatim strict skip_empty_rows formula
+    verbatim strict strict_eol skip_empty_rows formula
     undef_str comment_str
     types
     callbacks

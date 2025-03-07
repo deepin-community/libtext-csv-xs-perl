@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-# Copyright PROCURA B.V. (c) 2006-2021 H.Merijn Brand
+# Copyright PROCURA B.V. (c) 2006-2025 H.Merijn Brand
 
 require 5.006001; # <- also see postamble at the bottom for META.yml
 use strict;
@@ -20,7 +20,7 @@ my %wm = (
     NAME         => "Text::CSV_XS",
     DISTNAME     => "Text-CSV_XS",
     ABSTRACT     => "Comma-Separated Values manipulation routines",
-    AUTHOR       => "H.Merijn Brand <h.m.brand\@xs4all.nl>",
+    AUTHOR       => "H.Merijn Brand <hmbrand\@cpan.org>",
     VERSION_FROM => "CSV_XS.pm",
     PREREQ_PM	 => { "XSLoader"	=> 0,
 		      "Config"		=> 0,
@@ -106,9 +106,10 @@ sub postamble {
 		    $(TEST_FILES) 3>valgrind.log
 		    );
 
-    my $min_vsn = ($] >= 5.010 && -d "xt" && -d "tmp" && ($ENV{AUTOMATED_TESTING} || 0) != 1)
+    my $min_vsn = ($] >= 5.010 && -d "xt" && -d "sandbox" && ($ENV{AUTOMATED_TESTING} || 0) != 1)
 	? join "\n" =>
 	    'test ::',
+	    '	perl doc/make-doc.pl examples/csv*',
 	    '	-@env TEST_FILES="xt/*.t" make -e test_dynamic',
 	    ''
 	: "";
@@ -160,15 +161,9 @@ sub postamble {
 	'test_used:	test',
 	'	prove -vwb sandbox/used-by.pl',
 	'',
-	'doc docs:		doc/CSV_XS.md doc/CSV_XS.html doc/CSV_XS.man',
-	'doc/CSV_XS.md:		CSV_XS.pm',
-	'	pod2markdown  < $? > $@',
-	'doc/CSV_XS.html:	CSV_XS.pm',
-	'	pod2html      < $? 2>&1 | grep -v "^Cannot find" > $@',
-	'doc/CSV_XS.3:		CSV_XS.pm',
-	'	pod2man       < $? > $@',
-	'doc/CSV_XS.man:	doc/CSV_XS.3',
-	'	nroff -mandoc < $? > $@',
+	'doc docs:		doc/Text-CSV_XS.md',
+	'doc/Text-CSV_XS.md:	CSV_XS.pm',
+	'	perl doc/make-doc.pl examples/csv* --pod',
 	'',
 	$min_vsn;
     } # postamble

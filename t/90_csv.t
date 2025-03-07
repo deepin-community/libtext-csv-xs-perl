@@ -5,7 +5,7 @@ use warnings;
 use Config;
 
 #use Test::More "no_plan";
- use Test::More tests => 115;
+ use Test::More tests => 127;
 
 BEGIN {
     use_ok "Text::CSV_XS", ("csv");
@@ -70,9 +70,15 @@ if ($] >= 5.008001) {
 	ok (my $ref = csv (in => $tfn, $alias => \@hdr), "csv ($alias => ... -- implied headers)");
 	is_deeply (\@hdr, [qw( foo bar baz )], "Headers kept for $alias");
 	}
+    foreach my $alias (qw( internal true yes 1 )) {
+	my $buf = "";
+	ok (my $ref = csv (in => $tfn, kh => $alias), "csv (kh => $alias)");
+	ok (csv (in => $ref, out => \$buf, kh => $alias, quote_space => 0, eol => "\n"), "get it back");
+	is ($buf, $data, "Headers kept for $alias");
+	}
     }
 else {
-    ok (1, q{This perl cannot do scalar IO}) for 1..14;
+    ok (1, q{This perl cannot do scalar IO}) for 1..26;
     }
 
 if ($] >= 5.008001) {
@@ -154,6 +160,7 @@ SKIP: {
     }
 
 # Some "out" checks
+my $crnl;
 open my $fh, ">", $tfn or die "$tfn: $!\n";
 csv (in => [{ a => 1 }], out => $fh);
 csv (in => [{ a => 1 }], out => $fh, headers => undef);
@@ -165,7 +172,10 @@ close $fh;
     my $dta = do {local $/; <$fh>};
     my @layers = eval { PerlIO::get_layers ($fh); };
     close $fh;
-    grep m/crlf/ => @layers and $dta =~ s/\n/\r\n/g;
+    if (grep m/crlf/ => @layers) {
+	$dta =~ s/\n/\r\n/g;
+	$crnl++;
+	}
     is ($dta, "a\r\n1\r\n" x 5, "AoH to out");
     }
 
@@ -238,7 +248,7 @@ $] < 5.008 and unlink glob "SCALAR(*)";
 
     local $SIG{__DIE__}  = sub { $err = shift; };
     local $SIG{__WARN__} = sub { $err = shift; };
-    foreach my $hr (1, "foo", \my %hr, sub { 42; }, *STDOUT) {
+    foreach my $hr (42, "foo", \my %hr, sub { 42; }, *STDOUT) {
 	$r = eval { csv (in => $tfn, kh => $hr, auto_diag => 0); };
 	$err =~ s{\s+at\s+\S+\s+line\s+\d+\.\r?\n?\Z}{};
 	is ($r, undef, "Fail call with bad keep_header type");
@@ -305,12 +315,6 @@ $] < 5.008 and unlink glob "SCALAR(*)";
     is ($r, undef, "Cannot add arrays to hashes");
     like ($err, qr{type mismatch}i, "ARRAY != HASH");
     $err = "";
-
-    $r = eval { csv (in => "in.csv", out => "out.csv"); };
-    $err =~ s{\s+at\s+\S+\s+line\s+\d+\.\r?\n?\Z}{};
-    is ($r, undef, "Cannot use strings for both");
-    like ($err, qr{^cannot}i, "Explicitely unsupported");
-    $err = "";
     }
 
 eval {
@@ -340,8 +344,17 @@ eval {
     my $ofn = "_STDOUT.csv";
 
     open STDOUT, ">", $ofn or die "$ofn: $!\n";
-    csv (in => $tfn, quote_always => 1, fragment => "row=1-2",
-	on_in => sub { splice @{$_[1]}, 1; }, eol => "\n");
+    {	my @w;
+	local $SIG{__WARN__} = sub { push @w => @_ };
+	csv (in => $tfn, quote_always => 1, fragment => "row=1-2",
+	    on_in => sub { splice @{$_[1]}, 1; }, eol => "\n");
+	if ($crnl) {
+	    is (scalar @w, 0, "CRNL layer found");
+	    }
+	else {
+	    like ($w[0], qr/2016 - EOL/, "EOL mismatch");
+	    }
+	}
     close STDOUT;
     my $dta = do { local (@ARGV, $/) = $ofn; <> };
     is ($dta, qq{"a"\n"1"\n}, "Chained csv call inherited attributes");
@@ -359,6 +372,12 @@ eval {
     close STDOUT;
     $dta = do { local (@ARGV, $/) = $ofn; <> };
     is ($dta, qq{1,2\n}, "out to \\*STDOUT");
+    unlink $ofn;
+
+    open STDOUT, ">", $ofn;
+    csv (in => []);
+    close STDOUT;
+    is (-s $ofn, 0, "No data results in an empty file");
     unlink $ofn;
 
     SKIP: {

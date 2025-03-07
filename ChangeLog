@@ -1,3 +1,84 @@
+1.60	- 2025-01-29, H.Merijn Brand
+    * Add SECURITY.md
+    * CR/NL/CRNL inside quoted fields not affected by strict_eol
+    * Fix incorrect error 2014 (issue 62)
+
+1.59	- 2025-01-05, H.Merijn Brand
+    * Fixed EOL test for Windows with crnl layer
+    * It is 2025
+
+1.58	- 2024-12-30, H.Merijn Brand
+    * Add strict_eol (warnings default in csv ())
+    * Add XS line number in errors
+    * Add streaming support - not set in stone
+
+1.57	- 2024-11-12, H.Merijn Brand
+    * Keep runtime error from csv ()
+    * add csv (on_error)
+
+1.56	- 2024-08-09, H.Merijn Brand
+    * Yet another strict/comment_str conflict (issue 57)
+    * Strict affected by column_names
+
+1.55	- 2024-06-18, H.Merijn Brand
+    * More fixes for strict under bind_columns (issue 54)
+    * Strict won't hide previous error (issue 56)
+    * Update to Devel::PPPort-3.72
+
+1.54	- 2024-04-18, H.Merijn Brand
+    * Fix doc (Jean Forget, RT#150757)
+    * It is 2024
+    * Fix comment_str with strict
+    * Doc fixup (RT#151546)
+
+1.53	- 2023-11-22, H.Merijn Brand
+    * Two casts for -Wformat (issue 50)
+    * Add --skip-empty to csv2xlsx
+    * Add --font and --font-size to csv2xlsx
+    * Fix skip_empty_rows ("skip") and trailing newlines (Corey Hickey, PR#52)
+    * Fix comment in last line (RT#150501)
+
+1.52	- 2023-09-21, H.Merijn Brand
+    * Fix possible coredump in cache on non-IO parse (issue 49)
+
+1.51	- 2023-08-07, H.Merijn Brand
+    * Contact e-mail update
+    * Attribute skip_empty_rows extended
+    * Fix comments (PR#45)
+    * Fix help (x12340, PR#46)
+    * Update to Devel::PPPort-3.71
+    * Fix HTML on Windows
+    * Fix double header-interpretation on bom + headers => "auto" (issue 47)
+
+1.50	- 2023-03-01, H.Merijn Brand
+    * Promote sep to sep_set in csv () with auto-headers
+    * Fix bug in set_diag surfaced by PERL_RC_STACK
+
+1.49	- 2023-01-03, H.Merijn Brand
+    * csv2xlsx --split=CxP [--split-label=C]
+    * Full documentation/manual for csv2xlsx
+    * Fix non-integer arguments to getline_all (issue 39)
+    * It's 2023
+
+1.48	- 2022-05-24, H.Merijn Brand
+    * It's 2022
+    * Update to Devel::PPPort-3.64
+    * kh => 1 (use internal headers)
+    * Update to Devel::PPPort-3.67
+    * Add constants for META flags (RT#142508)
+    * Update to Devel::PPPort-3.68
+    * Export :CONSTANTS
+    * Fix sep_set typo (issue 37)
+    * Tested against perl-5.36.0
+
+1.47	- 2021-12-21, H.Merijn Brand
+    * Make error 2014 catchable
+    * Suppress empty lines on empty input (issue 34)
+    * Perl 6 -> Raku in docs (RT#136864)
+    * IETF changed their URLs
+    * Update to Devel::PPPort-3.63
+    * Add some documentation for Google hist (Nigel)
+
 1.46	- 2021-03-24, H.Merijn Brand
     * It's 2021
     * New attribute comment_str     (RFC 4180-bis)
@@ -56,7 +137,7 @@
     * [csv2xlsx] sheetnames are restricted to 31 characters
     * Generate cpanfile
     * Add munge type "db"
-    * [csv2xls/csv2xlsx] do not generate xls/xlsx on empty CSV (issue#18)
+    * [csv2xls/csv2xlsx] do not generate xls/xlsx on empty CSV (issue 18)
     * New: support $csv->formula (sub { ... })
     * Support stacked encodings
 
@@ -170,7 +251,7 @@
     * Add some docs for bind_columns
 
 1.24	- 2016-07-09, H.Merijn Brand
-    * Fix typo in docs example code (issue#4, joevak)
+    * Fix typo in docs example code (issue 4, joevak)
     * Set auto-wrap on for csv2xls with embedded newlines
     * Add examples/csv2xlsx, the MSExcel-2007+ version of csv2xls
       Includes new feature to merge multiple CSV's into a single xlsx
@@ -890,5 +971,5 @@
     * Moved encoding and decoding to XS; added binary mode; added
       print () and getline () methods.
 
-1998-06-05  Alan Citterman  <alan@mfgrtl.com>
+0.01	- 1998-06-05  Alan Citterman  <alan@mfgrtl.com>
     * Initial version
