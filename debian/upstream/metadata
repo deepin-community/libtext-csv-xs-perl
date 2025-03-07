@@ -1,6 +1,5 @@
 ---
 Archive: CPAN
-Bug-Database: https://github.com/Tux/Text-CSV_XS/issues
-Bug-Submit: https://github.com/Tux/Text-CSV_XS/issues/new
+Bug-Database: https://rt.cpan.org/NoAuth/Bugs.html?Dist=Text-CSV_XS
 Repository: https://github.com/Tux/Text-CSV_XS.git
 Repository-Browse: https://github.com/Tux/Text-CSV_XS

@@ -10,11 +10,11 @@ Section: perl
 Testsuite: autopkgtest-pkg-perl
 Priority: optional
 Build-Depends: debhelper-compat (= 13),
-               libencode-perl (>= 3.06) <!nocheck>,
+               libencode-perl (>= 3.20) <!nocheck>,
                libtest-simple-perl <!nocheck>,
                perl-xs-dev,
                perl:native
-Standards-Version: 4.6.0
+Standards-Version: 4.7.0
 Vcs-Browser: https://salsa.debian.org/perl-team/modules/packages/libtext-csv-xs-perl
 Vcs-Git: https://salsa.debian.org/perl-team/modules/packages/libtext-csv-xs-perl.git
 Homepage: https://metacpan.org/release/Text-CSV_XS
@@ -26,7 +26,7 @@ Multi-Arch: same
 Depends: ${misc:Depends},
          ${perl:Depends},
          ${shlibs:Depends},
-         libencode-perl (>= 3.06)
+         libencode-perl (>= 3.20)
 Enhances: libtext-csv-perl
 Description: Perl C/XS module to process Comma-Separated Value files
  Text::CSV_XS provides facilities for the composition and decomposition of

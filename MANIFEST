@@ -3,6 +3,7 @@ README			Docs
 MANIFEST		This file
 cpanfile		Dependency list for cpan/cpanm
 CONTRIBUTING.md		Guide in how to contribute
+SECURITY.md		Guide for reporting security issues
 CSV_XS.pm		Perl part of the module
 CSV_XS.xs		C part of the module
 Makefile.PL		Makefile generator
@@ -10,6 +11,7 @@ ppport.h		Perl/Pollution/Portability script/include file
 t/10_base.t		Base tests (combine and parse only)
 t/12_acc.t		Accessor methods
 t/15_flags.t		Basic flag tests
+t/16_import.t		Imports/exports of constants
 t/20_file.t		IO tests (print and getline) global  handles
 t/21_lexicalio.t	IO tests (print and getline) lexical handles
 t/22_scalario.t		IO tests (print and getline) scalar io (perlio)
@@ -25,7 +27,10 @@ t/55_combi.t		Different CSV character combinations
 t/60_samples.t		Miscellaneous problems from the modules history.
 t/65_allow.t		Allow bad formats
 t/66_formula.t		Formula behavior
+t/67_emptrow.t		Empty row behavior
+t/68_header.t		Test header option combinations
 t/70_rt.t		Tests based on RT reports
+t/71_strict.t		Test strict rrelated issues
 t/75_hashref.t		getline_hr related tests
 t/76_magic.t		array_ref from magic
 t/77_getall.t		Get all rows at once
@@ -36,6 +41,7 @@ t/81_subclass.t		Subclassed
 t/85_util.t		Test for utility methods
 t/90_csv.t		Function csv () checks
 t/91_csv_cb.t		Callbacks with csv function
+t/92_stream.t		Streaming functionality
 t/util.pl		Extra test utilities
 examples/csv2xls	Script to onvert CSV files to M$Excel       XLS
 examples/csv2xlsx	Script to onvert CSV files to M$Excel 2007+ XLSX

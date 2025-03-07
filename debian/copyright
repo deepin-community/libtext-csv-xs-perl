@@ -1,16 +1,16 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: Text-CSV_XS
-Upstream-Contact: H.Merijn Brand <h.m.brand@xs4all.nl>
+Upstream-Contact: H.Merijn Brand <hmbrand.org>
 Source: https://metacpan.org/release/Text-CSV_XS
 
 Files: *
-Copyright: 2007-2021, H. Merijn Brand <h.m.brand@xs4all.nl>
+Copyright: 2007-2025, H. Merijn Brand <hmbrand.org>
  1998-2001, Jochen Wiedmann <joe@ispsoft.de>
  1997, Alan Citterman <alan@mfgrtl.com>
 License: Artistic or GPL-1+
 
 Files: examples/*
-Copyright: 2007-2020, H. Merijn Brand <h.m.brand@xs4all.nl>
+Copyright: 2007-2023, H. Merijn Brand <hmbrand.org>
 License: Artistic or GPL-1+
 
 Files: ppport.h
@@ -29,7 +29,7 @@ Copyright: 1998, Craig Sanders <cas@taz.net.au>
  2006, Niko Tyni <ntyni@iki.fi>
  2007, Krzysztof Krzyzaniak (eloy) <eloy@debian.org>
  2007-2008, Damyan Ivanov <dmn@debian.org>
- 2007-2021, gregor herrmann <gregoa@debian.org>
+ 2007-2025, gregor herrmann <gregoa@debian.org>
  2008, Jose Luis Rivas <ghostbar38@gmail.com>
  2008, Vincent Danjean <vdanjean@debian.org>
  2008-2012, Ansgar Burchardt <ansgar@debian.org>
