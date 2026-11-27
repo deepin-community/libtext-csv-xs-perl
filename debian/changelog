@@ -1,3 +1,11 @@
+libtext-csv-xs-perl (1.60-1+deb13u1) trixie; urgency=medium
+
+  * Fix possible stack corruption: CVE-2026-7111.
+    Patch taken from upstream Git commit, as released in 1.62.
+    (Closes: #1135232)
+
+ -- gregor herrmann <gregoa@debian.org>  Wed, 06 May 2026 17:02:23 +0200
+
 libtext-csv-xs-perl (1.60-1) unstable; urgency=medium
 
   * Import upstream version 1.60.
